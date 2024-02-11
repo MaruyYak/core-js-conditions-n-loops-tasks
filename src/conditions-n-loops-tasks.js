@@ -21,8 +21,8 @@
  *  0  => true
  *  -5 => false
  */
-function isPositive(/* number */) {
-  throw new Error('Not implemented');
+function isPositive(number) {
+  return number >= 0;
 }
 
 /**
@@ -38,10 +38,15 @@ function isPositive(/* number */) {
  *  -5, 0, 5      => 5
  *  -0.1, 0, 0.2  => 0.2
  */
-function getMaxNumber(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getMaxNumber(a, b, c) {
+  if (a >= b && a >= c) {
+    return a;
+  }
+  if (b >= a && b >= c) {
+    return b;
+  }
+  return c;
 }
-
 /**
  * Checks if a queen can capture a king in the next move on an 8x8 chessboard.
  * See more details at https://en.wikipedia.org/wiki/Queen_(chess)
@@ -60,8 +65,13 @@ function getMaxNumber(/* a, b, c */) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  const xPos = queen.x - king.x;
+  const yPos = queen.y - king.y;
+
+  return (
+    queen.x === king.x || queen.y === king.y || xPos === yPos || xPos === -yPos
+  );
 }
 
 /**
@@ -82,8 +92,13 @@ function canQueenCaptureKing(/* queen, king */) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  if (a === b || b === c || a === c) {
+    if (a + b > c && b + c > a && a + c > b) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /**
@@ -100,8 +115,32 @@ function isIsoscelesTriangle(/* a, b, c */) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  const romanMap = {
+    0: '',
+    1: 'I',
+    2: 'II',
+    3: 'III',
+    4: 'IV',
+    5: 'V',
+    6: 'VI',
+    7: 'VII',
+    8: 'VIII',
+    9: 'IX',
+    10: 'X',
+  };
+  if (num < 1 || num > 39) {
+    return 'Number out of range';
+  }
+  let converted = '';
+  const dec = num % 10;
+  let val = Math.floor(num / 10);
+  while (val > 0) {
+    converted += romanMap[10];
+    val -= 1;
+  }
+  converted += romanMap[dec];
+  return converted;
 }
 
 /**
@@ -119,8 +158,59 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let converted = '';
+
+  for (let i = 0; i < numberStr.length; i += 1) {
+    const value = numberStr[i];
+    switch (value) {
+      case '0':
+        converted += 'zero';
+        break;
+      case '1':
+        converted += 'one';
+        break;
+      case '2':
+        converted += 'two';
+        break;
+      case '3':
+        converted += 'three';
+        break;
+      case '4':
+        converted += 'four';
+        break;
+      case '5':
+        converted += 'five';
+        break;
+      case '6':
+        converted += 'six';
+        break;
+      case '7':
+        converted += 'seven';
+        break;
+      case '8':
+        converted += 'eight';
+        break;
+      case '9':
+        converted += 'nine';
+        break;
+      case '.':
+        converted += 'point';
+        break;
+      case ',':
+        converted += 'point';
+        break;
+      case '-':
+        converted += 'minus';
+        break;
+      default:
+        break;
+    }
+    if (i < numberStr.length - 1) {
+      converted += ' ';
+    }
+  }
+  return converted;
 }
 
 /**
