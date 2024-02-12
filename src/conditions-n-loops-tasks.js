@@ -356,8 +356,23 @@ function getSpiralMatrix(/* size */) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(mat) {
+  const mtrxLen = mat.length;
+  const matrix = [...mat];
+  for (let i = 0; i < mtrxLen; i += 1) {
+    for (let j = i + 1; j < mtrxLen; j += 1) {
+      const store = matrix[i][j];
+      matrix[i][j] = matrix[j][i];
+      matrix[j][i] = store;
+    }
+  }
+  for (let i = 0; i < mtrxLen; i += 1) {
+    for (let j = 0; j < Math.floor(mtrxLen / 2); j += 1) {
+      const store = matrix[i][j];
+      matrix[i][j] = matrix[i][mtrxLen - j - 1];
+      matrix[i][mtrxLen - j - 1] = store;
+    }
+  }
 }
 
 /**
@@ -374,8 +389,27 @@ function rotateMatrix(/* matrix */) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+function sortByAsc(arr) {
+  const array = arr;
+
+  const change = (i, iValue, jValue) => {
+    array[i] = jValue;
+    array[i + 1] = iValue;
+  };
+  for (let i = 0; i < array.length - 1; i += 1) {
+    const iValue = array[i];
+    const jValue = array[i + 1];
+    if (iValue > jValue) {
+      change(i, iValue, jValue);
+
+      let j = i;
+
+      while (j > 0 && array[j] < array[j - 1]) {
+        change(j - 1, array[j - 1], array[j]);
+        j -= 1;
+      }
+    }
+  }
 }
 
 /**
@@ -395,8 +429,12 @@ function sortByAsc(/* arr */) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  let result = str;
+  for (let i = 0; i < iterations; i += 1) {
+    result = result.replace(/(.)./g, '$1') + result.replace(/.(.)/g, '$1');
+  }
+  return result;
 }
 
 /**
